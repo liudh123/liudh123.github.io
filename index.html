@@ -1,254 +1,85 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>赛博朋克风 GitHub 主页</title>
-  <style>
-    /* 全局样式重置 */
-    * {
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    body {
-      background: #000;
-      color: #fff;
-      /* 赛博朋克渐变背景（可替换成你喜欢的背景图） */
-      background: linear-gradient(45deg, #ff00cc, #333399);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* 容器居中 + 限制宽度 */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-
-    /* 头部导航（可根据需求加交互） */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 60px;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-    }
-    .nav-logo img {
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-    }
-    .nav-logo h1 {
-      font-size: 28px;
-      font-weight: 700;
-      color: #ff00cc;
-      text-shadow: 0 0 10px rgba(255,0,204,0.8);
-    }
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 12px;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: #ff00cc;
-    }
-    .nav-search input {
-      padding: 6px 12px;
-      border: 1px solid #ff00cc;
-      background: transparent;
-      color: #fff;
-      border-radius: 4px;
-      margin-left: 20px;
-    }
-
-    /* 主内容区域：头像 + 标题 + 数据模块 */
-    .hero {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 40px;
-      margin-bottom: 80px;
-    }
-    /* 头像区域（用纯色块占位，可替换成你的头像） */
-    .hero-avatar {
-      flex: 1 1 200px;
-      text-align: center;
-    }
-    .avatar-placeholder {
-      width: 200px;
-      height: 200px;
-      background: #ff00cc;
-      border-radius: 50%;
-      margin: 0 auto 20px;
-      box-shadow: 0 0 20px rgba(255,0,204,0.6);
-      overflow: hidden;
-    }
-    .hero-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .hero-avatar p {
-      font-size: 18px;
-      color: #ddd;
-    }
-
-    /* 标题与数据展示 */
-    .hero-content {
-      flex: 1 1 400px;
-    }
-    .hero-content h2 {
-      font-size: 48px;
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.2;
-      margin-bottom: 20px;
-      /* 赛博故障文字效果（CSS 简单模拟） */
-      text-shadow: 
-        1px 1px 0 #333399,
-        -1px -1px 0 #ff00cc,
-        0 0 8px rgba(255,255,255,0.4);
-      position: relative;
-    }
-    /* 模拟文字“故障闪烁”，可按需调整 */
-    .hero-content h2::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 2px;
-      top: 2px;
-      color: transparent;
-      background-clip: text;
-      -webkit-background-clip: text;
-      background-image: linear-gradient(45deg, #ff00cc, #333399);
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-      animation: glitch 3s infinite;
-    }
-    @keyframes glitch {
-      0% { clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%); }
-      2% { clip-path: polygon(0 35%, 100% 35%, 100% 36%, 0 36%); }
-      4% { clip-path: polygon(0 50%, 100% 50%, 100% 51%, 0 51%); }
-      6% { clip-path: polygon(0 65%, 100% 65%, 100% 66%, 0 66%); }
-      8% { clip-path: polygon(0 80%, 100% 80%, 100% 81%, 0 81%); }
-      10%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-    }
-
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 40px;
-    }
-    .stat-card {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,0,204,0.3);
-      border-radius: 8px;
-      padding: 20px;
-      flex: 1 1 200px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px rgba(255,0,204,0.5);
-    }
-    .stat-card h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #ff00cc;
-    }
-    .stat-card p {
-      font-size: 16px;
-      color: #ddd;
-    }
-
-    /* 响应式适配：手机端堆叠布局 */
-    @media (max-width: 768px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero-content h2 {
-        font-size: 36px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- 顶部导航栏 -->
-    <div class="nav">
-      <div class="nav-logo">
-        <!-- 替换成你的 GitHub 头像或品牌 Logo -->
-        <img src="https://github.com/your-username.png" alt="Logo" />
-        <h1>Githuik</h1>
-      </div>
-      <div class="nav-links">
-        <a href="#projects">Projects</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="nav-search">
-        <input type="text" placeholder="Search..." />
-      </div>
-    </div>
-
-    <!-- 主视觉区域：头像 + 标题 + 数据统计 -->
-    <div class="hero">
-      <div class="hero-avatar">
-        <!-- 头像占位，替换成你的头像链接 -->
-        <div class="avatar-placeholder">
-          <!-- <img src="your-avatar.jpg" alt="Avatar" /> -->
-        </div>
-        <p>@your-username</p>
-      </div>
-      <div class="hero-content">
-        <h2 data-text="Githuik">Githuik</h2>
-        <p>
-          赛博朋克开发者 | 热爱开源 & 前端/后端/AI 探索<br />
-          用代码构建未来，让像素与逻辑碰撞出霓虹火花 ✨
-        </p>
-        <div class="stats">
-          <div class="stat-card">
-            <h3>Repositories</h3>
-            <p>123+</p>
-          </div>
-          <div class="stat-card">
-            <h3>Stars</h3>
-            <p>456+</p>
-          </div>
-          <div class="stat-card">
-            <h3>Followers</h3>
-            <p>78+</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 这里可继续扩展：项目展示、博客链接、技能栈等模块 -->
-    <!-- 示例：项目卡片 -->
-    <section id="projects">
-      <h2 style="font-size: 32px; margin-bottom: 40px; color: #ff00cc;">Projects</h2>
-      <div class="stats">
-        <div class="stat-card">
-          <h3>赛博博客系统</h3>
-          <p>Next.js + TypeScript 构建，支持 Markdown 动态渲染</p>
-          <p style="margin-top: 10px; color: #333399;">✨ Star 它 → <a href="https://github.com/your-repo" style="color:#ff00cc;">Repo Link</a></p>
-        </div>
-        <div class="stat-card">
-          <h3>AI 代码助手</h3>
-          <p>Python + OpenAI API，实时生成代码片段</p>
-          <p style="margin-top: 10px; color: #333399;">✨ Star 它 → <a href="https://github.com/your-repo" style="color:#ff00cc;">Repo Link</a></p>
-        </div>
-      </div>
-    </section>
+<div align="center">
+  <div style="position: relative; display: inline-block;">
+    <!-- 头像带霓虹边框效果 -->
+    <img src="https://picsum.photos/200/200" alt="个人头像" width="200" height="200" style="border-radius: 50%; border: 4px solid; border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1; box-shadow: 0 0 15px #00ffff, 0 0 30px rgba(0, 255, 255, 0.5);">
+    
+    <!-- 故障艺术效果叠加 -->
+    <div style="position: absolute; top: 0; left: 5px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255, 0, 255, 0.2); filter: blur(5px); z-index: -1;"></div>
   </div>
-</body>
-</html>
+
+  <h1 style="font-family: 'Courier New', monospace; background: linear-gradient(90deg, #ff00ff, #00ffff); -webkit-background-clip: text; color: transparent; text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); font-size: 2.5em; margin: 20px 0;">
+    CYBER_DEV_0x45
+  </h1>
+
+  <p style="color: #00ffff; font-family: 'Courier New', monospace; text-shadow: 0 0 5px #00ffff;">
+    🔴 全栈开发者 | 🔵 安全研究员 | 🟣 未来主义者
+  </p>
+
+  <!-- 霓虹分隔线 -->
+  <div style="height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, #00ffff, transparent); margin: 20px 0;"></div>
+</div>
+
+### 📟 关于我> 系统日志: 身份验证通过
+> 代号: CYBER_DEV_0x45
+> 领域: 区块链 | 逆向工程 | 前端架构
+> 状态: 在线 - 正在破解现实矩阵
+> 标语: "代码是数字世界的神经网络"
+<div style="background: #0d0d0d; border: 1px solid #ff00ff; border-radius: 5px; padding: 15px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+  <p style="color: #00ffcc; font-family: 'Courier New', monospace; line-height: 1.6;">
+    游走在0和1之间的数字幽灵，专注于构建突破常规的赛博系统。热衷于将复古未来主义融入代码，创造既怀旧又前卫的数字体验。
+  </p>
+</div>
+
+### 💻 技术栈
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
+  <span style="background: #121212; border: 1px solid #00ffff; color: #00ffff; padding: 5px 10px; border-radius: 3px; font-family: 'Courier New', monospace; box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);">JavaScript</span>
+  <span style="background: #121212; border: 1px solid #ff00ff; color: #ff00ff; padding: 5px 10px; border-radius: 3px; font-family: 'Courier New', monospace; box-shadow: 0 0 5px rgba(255, 0, 255, 0.3);">TypeScript</span>
+  <span style="background: #121212; border: 1px solid #ffff00; color: #ffff00; padding: 5px 10px; border-radius: 3px; font-family: 'Courier New', monospace; box-shadow: 0 0 5px rgba(255, 255, 0, 0.3);">React</span>
+  <span style="background: #121212; border: 1px solid #00ff00; color: #00ff00; padding: 5px 10px; border-radius: 3px; font-family: 'Courier New', monospace; box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);">Node.js</span>
+  <span style="background: #121212; border: 1px solid #ff6600; color: #ff6600; padding: 5px 10px; border-radius: 3px; font-family: 'Courier New', monospace; box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);">Rust</span>
+  <span style="background: #121212; border: 1px solid #6600ff; color: #6600ff; padding: 5px 10px; border-radius: 3px; font-family: 'Courier New', monospace; box-shadow: 0 0 5px rgba(102, 0, 255, 0.3);">Solidity</span>
+</div>
+
+### 🔮 主要项目
+| 项目 | 描述 | 状态 |
+|------|------|------|
+| <span style="color: #00ffff;">NEON_NET</span> | 基于WebGL的赛博朋克风格3D聊天室 | 🟢 活跃开发 |
+| <span style="color: #ff00ff;">HACK_PROTOCOL</span> | 网络安全CTF练习平台 | 🔵 稳定版 |
+| <span style="color: #00ff00;">DIGITAL_GHOST</span> | 匿名通信协议实现 | 🟠 测试阶段 |
+
+### 🌐 连接矩阵
+<div style="display: flex; gap: 15px; margin: 20px 0;">
+  <a href="#" style="color: #ff00ff; text-decoration: none; font-family: 'Courier New', monospace; transition: all 0.3s; border-bottom: 1px solid transparent;">
+    <span style="text-shadow: 0 0 5px #ff00ff;">🌐 personal.website</span>
+  </a>
+  <a href="#" style="color: #00ffff; text-decoration: none; font-family: 'Courier New', monospace; transition: all 0.3s; border-bottom: 1px solid transparent;">
+    <span style="text-shadow: 0 0 5px #00ffff;">📱 @cyber_dev</span>
+  </a>
+  <a href="#" style="color: #00ff00; text-decoration: none; font-family: 'Courier New', monospace; transition: all 0.3s; border-bottom: 1px solid transparent;">
+    <span style="text-shadow: 0 0 5px #00ff00;">📧 contact@cyber.dev</span>
+  </a>
+</div>
+
+<!-- 底部赛博元素 -->
+<div style="position: relative; height: 30px; margin-top: 30px; overflow: hidden;">
+  <div style="position: absolute; width: 100%; height: 2px; background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff); animation: scan 2s linear infinite;"></div>
+  <div style="position: absolute; bottom: 0; font-family: 'Courier New', monospace; color: #00ff00; font-size: 12px;">
+    SYSTEM CHECK: OK | SECURITY: LOCKED | VERSION: 0.4.5
+  </div>
+</div>
+
+<style>
+  body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+  }
+  
+  a:hover {
+    border-bottom: 1px solid;
+  }
+  
+  @keyframes scan {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+  }
+</style>
